@@ -404,40 +404,89 @@ GAMES['speed']=function(){
    GAME 2 – SUBJECT HUNTER  (3 difficulty levels)
 ════════════════════════════════════════════════════════ */
 const SF_EASY=[
-  {groups:[['Alfa'],['sings'],['beautiful songs','to his fans']],si:0,hint:'Chi canta? / Who sings?',pronoun:'he'},
-  {groups:[['Sofia'],['loves'],['music and dancing','every day']],si:0,hint:'Chi ama la musica? / Who loves music?',pronoun:'she'},
-  {groups:[['The dog'],['sleeps'],['on the sofa','all afternoon']],si:0,hint:'Chi dorme? / Who sleeps?',pronoun:'it'},
-  {groups:[['Ballet dancers'],['practise'],['for many hours','every single day']],si:0,hint:'Chi si allena? / Who practises?',pronoun:'they'},
-  {groups:[['Therapy dogs'],['help'],['patients','feel better','in hospital']],si:0,hint:'Chi aiuta? / Who helps?',pronoun:'they'},
-  {groups:[['My sister'],['goes'],['to ballet class'],['on Mondays and Thursdays']],si:0,hint:'Chi va a lezione? / Who goes to class?',pronoun:'she'},
-  {groups:[['Billie Eilish'],['wears'],['big comfortable clothes'],['in all her music videos']],si:0,hint:'Chi indossa? / Who wears?',pronoun:'she'},
-  {groups:[['Volleyball players'],['hit'],['the ball'],['over the net to score a point']],si:0,hint:'Chi colpisce la palla? / Who hits the ball?',pronoun:'they'},
-  {groups:[['A jockey'],['rides'],['a horse'],['in every professional race']],si:0,hint:'Chi cavalca? / Who rides?',pronoun:'he'},
+  // Affermative (si=0)
+  {groups:[['Marco'],['plays'],['guitar','every evening']],si:0,hint:'Chi suona la chitarra? / Who plays guitar?',pronoun:'he'},
+  {groups:[['Emma'],['studies'],['English','and','Spanish']],si:0,hint:'Chi studia? / Who studies?',pronoun:'she'},
+  {groups:[['The cat'],['drinks'],['milk','in the morning']],si:0,hint:'Chi beve il latte? / Who drinks milk?',pronoun:'it'},
+  {groups:[['My friends'],['laugh'],['at funny jokes','all the time']],si:0,hint:'Chi ride? / Who laughs?',pronoun:'they'},
+  {groups:[['A bird'],['flies'],['over the trees','very fast']],si:0,hint:'Chi vola? / Who flies?',pronoun:'it'},
+  {groups:[['Luca'],['plays'],['football','on Saturdays']],si:0,hint:'Chi gioca? / Who plays?',pronoun:'he'},
+  {groups:[['Maya'],['draws'],['beautiful pictures','in art class']],si:0,hint:'Chi disegna? / Who draws?',pronoun:'she'},
+  {groups:[['The dogs'],['bark'],['at night','sometimes']],si:0,hint:'Chi guaisce? / Who barks?',pronoun:'they'},
+  // Interrogative (si=1)
+  {groups:[['Does'],['Marco'],['play','guitar','every evening?']],si:1,hint:'Interrogativa! / Interrogative!',pronoun:'he'},
+  {groups:[['Does'],['Emma'],['study','English','and','Spanish?']],si:1,hint:'Interrogativa! / Interrogative!',pronoun:'she'},
+  {groups:[['Does'],['the cat'],['drink','milk','in the morning?']],si:1,hint:'Interrogativa! / Interrogative!',pronoun:'it'},
+  {groups:[['Do'],['my friends'],['laugh','at funny jokes','all the time?']],si:1,hint:'Interrogativa con do! / Interrogative!',pronoun:'they'},
+  {groups:[['Does'],['a bird'],['fly','over the trees','very fast?']],si:1,hint:'Interrogativa! / Interrogative!',pronoun:'it'},
+  {groups:[['Does'],['Luca'],['play','football','on Saturdays?']],si:1,hint:'Interrogativa! / Interrogative!',pronoun:'he'},
+  {groups:[['Does'],['Maya'],['draw','beautiful pictures','in art class?']],si:1,hint:'Interrogativa! / Interrogative!',pronoun:'she'},
+  {groups:[['Do'],['the dogs'],['bark','at night','sometimes?']],si:1,hint:'Interrogativa con do! / Interrogative!',pronoun:'they'},
+  // Negative (si=0)
+  {groups:[['Marco'],['doesn\'t play'],['guitar','every evening']],si:0,hint:'Negativa! / Negative!',pronoun:'he'},
+  {groups:[['Emma'],['doesn\'t study'],['English','and','Spanish']],si:0,hint:'Negativa! / Negative!',pronoun:'she'},
+  {groups:[['The cat'],['doesn\'t drink'],['milk','in the morning']],si:0,hint:'Negativa! / Negative!',pronoun:'it'},
+  {groups:[['My friends'],['don\'t laugh'],['at funny jokes','all the time']],si:0,hint:'Negativa! / Negative!',pronoun:'they'},
+  {groups:[['A bird'],['doesn\'t fly'],['over the trees','very fast']],si:0,hint:'Negativa! / Negative!',pronoun:'it'},
+  {groups:[['Luca'],['doesn\'t play'],['football','on Saturdays']],si:0,hint:'Negativa! / Negative!',pronoun:'he'},
+  {groups:[['Maya'],['doesn\'t draw'],['beautiful pictures','in art class']],si:0,hint:'Negativa! / Negative!',pronoun:'she'},
+  {groups:[['The dogs'],['don\'t bark'],['at night','sometimes']],si:0,hint:'Negativa! / Negative!',pronoun:'they'},
 ];
 const SF_MED=[
-  // si=0 – soggetto in PRIMA posizione
-  {groups:[['Alfa'],['writes'],['songs about everyday life,','love and growing up']],si:0,hint:'Questa volta il soggetto è all\'inizio! – Chi scrive?',pronoun:'he'},
-  {groups:[['Therapy dogs'],['visit'],['hospitals and schools'],['every week to help people']],si:0,hint:'Il soggetto è il primo gruppo! – Chi visita?',pronoun:'they'},
-  // si=1 – soggetto dopo UNA frase introduttiva
-  {groups:[['In 2023,'],['Alfa'],['won'],['an important award','for best new Italian artist']],si:1,hint:'⚠️ Attenzione all\'inizio! – Chi ha vinto il premio?',pronoun:'he'},
-  {groups:[['At school,'],['therapy dogs'],['help'],['anxious students','concentrate better','during exams']],si:1,hint:'⚠️ Il soggetto non è all\'inizio! – Chi aiuta?',pronoun:'they'},
-  {groups:[['After the match,'],['the volleyball players'],['celebrate'],['their hard-earned victory','together']],si:1,hint:'⚠️ Cerca dopo la virgola! – Chi festeggia?',pronoun:'they'},
-  {groups:[['Every morning,'],['my sister'],['goes'],['to her ballet class','at the dance studio']],si:1,hint:'⚠️ Non è "Every morning"! – Chi va a lezione?',pronoun:'she'},
-  {groups:[['On social media,'],['Alfa\'s young fans'],['share and comment on'],['his new songs and videos','every week']],si:1,hint:'⚠️ Non è "On social media"! – Chi condivide?',pronoun:'they'},
-  // si=2 – soggetto dopo DUE gruppi introduttivi
-  {groups:[['In Italy,'],['every summer,'],['Alfa and other young artists'],['perform at big music festivals']],si:2,hint:'⚠️ Ci sono DUE introduzioni – il soggetto è il terzo gruppo! – Chi si esibisce?',pronoun:'they'},
-  {groups:[['In hospitals,'],['every morning,'],['a gentle therapy dog called Max'],['visits and comforts sick patients']],si:2,hint:'⚠️ Due gruppi introduttivi prima del soggetto! – Chi visita i pazienti?',pronoun:'it'},
+  // Affermative positions varied
+  {groups:[['Sophie'],['learns'],['Spanish','and','Italian','at school']],si:0,hint:'Chi studia? / Who studies?',pronoun:'she'},
+  {groups:[['Last summer,'],['my cousin'],['travelled'],['across Europe','with his family']],si:1,hint:'⚠️ Soggetto dopo virgola! / After comma!',pronoun:'he'},
+  {groups:[['Every weekend,'],['during the afternoon,'],['teenage','volunteers'],['clean','the local park','together']],si:2,hint:'⚠️ Due introduzioni! / Two introducers!',pronoun:'they'},
+  {groups:[['The swimming team'],['trains'],['five days a week','in the pool']],si:0,hint:'Chi si allena? / Who trains?',pronoun:'they'},
+  {groups:[['Before','exams,'],['stressed','students'],['meet','in the library','to study']],si:1,hint:'⚠️ Soggetto non primo! / Subject not first!',pronoun:'they'},
+  {groups:[['In the summer holidays,'],['every morning,'],['the kids','at camp'],['play','outdoor games','and','sports']],si:2,hint:'⚠️ Due gruppi introduttivi! / Two intro groups!',pronoun:'they'},
+  {groups:[['Liam'],['enjoys'],['rock music','and','concerts','every month']],si:0,hint:'Chi ama il rock? / Who loves rock?',pronoun:'he'},
+  {groups:[['During art class,'],['talented painters'],['create'],['incredible masterpieces']],si:1,hint:'⚠️ Dopo virgola! / After comma!',pronoun:'they'},
+  {groups:[['Throughout the year,'],['at every school event,'],['our amazing','orchestra'],['performs','beautiful classical','music']],si:2,hint:'⚠️ Due introduzioni prima! / Two intros before!',pronoun:'they'},
+  // Interrogative with subject moved
+  {groups:[['Does'],['Sophie'],['learn','Spanish','and','Italian','at school?']],si:1,hint:'⚠️ Interrogativa! / Interrogative!',pronoun:'she'},
+  {groups:[['Last summer,'],['did'],['my cousin'],['travel','across Europe','with his family?']],si:2,hint:'⚠️ Interrogativa con did! / Interrogative with did!',pronoun:'he'},
+  {groups:[['Every weekend,'],['during the afternoon,'],['do'],['teenage','volunteers'],['clean','the local park?']],si:3,hint:'⚠️ Interrogativa dopo due introduzioni! / Interrogative!',pronoun:'they'},
+  {groups:[['Do'],['the swimming team'],['train','five days a week','in the pool?']],si:1,hint:'⚠️ Interrogativa con do! / Interrogative!',pronoun:'they'},
+  {groups:[['Before','exams,'],['do'],['stressed','students'],['meet','in the library','to study?']],si:2,hint:'⚠️ Interrogativa con do! / Interrogative!',pronoun:'they'},
+  {groups:[['In the summer holidays,'],['every morning,'],['do'],['the kids','at camp'],['play','outdoor games?']],si:3,hint:'⚠️ Interrogativa dopo due intro! / Interrogative!',pronoun:'they'},
+  {groups:[['Does'],['Liam'],['enjoy','rock music','and','concerts','every month?']],si:1,hint:'⚠️ Interrogativa! / Interrogative!',pronoun:'he'},
+  {groups:[['During art class,'],['do'],['talented painters'],['create','incredible masterpieces?']],si:2,hint:'⚠️ Interrogativa con do! / Interrogative!',pronoun:'they'},
+  {groups:[['Throughout the year,'],['at every school event,'],['does'],['our amazing','orchestra'],['perform','beautiful classical','music?']],si:3,hint:'⚠️ Interrogativa dopo due intro! / Interrogative!',pronoun:'they'},
+  // Negative
+  {groups:[['Sophie'],['doesn\'t learn'],['Spanish','and','Italian','at school']],si:0,hint:'⚠️ Negativa! / Negative!',pronoun:'she'},
+  {groups:[['Last summer,'],['my cousin'],['didn\'t travel'],['across Europe','with his family']],si:1,hint:'⚠️ Negativa con didn\'t! / Negative!',pronoun:'he'},
+  {groups:[['Every weekend,'],['during the afternoon,'],['teenage','volunteers'],['don\'t','clean','the local park']],si:2,hint:'⚠️ Negativa! / Negative!',pronoun:'they'},
+  {groups:[['The swimming team'],['doesn\'t train'],['five days a week','in the pool']],si:0,hint:'⚠️ Negativa! / Negative!',pronoun:'they'},
+  {groups:[['Before','exams,'],['stressed','students'],['don\'t meet'],['in the library','to study']],si:1,hint:'⚠️ Negativa! / Negative!',pronoun:'they'},
+  {groups:[['In the summer holidays,'],['every morning,'],['the kids','at camp'],['don\'t','play','outdoor games']],si:2,hint:'⚠️ Negativa! / Negative!',pronoun:'they'},
+  {groups:[['Liam'],['doesn\'t enjoy'],['rock music','and','concerts','every month']],si:0,hint:'⚠️ Negativa! / Negative!',pronoun:'he'},
+  {groups:[['During art class,'],['talented painters'],['don\'t create'],['incredible masterpieces']],si:1,hint:'⚠️ Negativa! / Negative!',pronoun:'they'},
+  {groups:[['Throughout the year,'],['at every school event,'],['our amazing','orchestra'],['doesn\'t perform','beautiful classical','music']],si:2,hint:'⚠️ Negativa! / Negative!',pronoun:'they'},
 ];
 const SF_HARD=[
-  {words:['Every','day','after','school,','my','best','friend','and','I','play','volleyball','together','for','at','least','two','hours','before','dinner'],subject:[4,5,6,7,8],hint:'⚠️ Il soggetto sono due persone! – Chi gioca?',pronoun:'we'},
-  {words:['In','schools','across','Italy,','many','young','students','feel','extremely','anxious','before','important','exams','and','school','presentations'],subject:[4,5,6],hint:'⚠️ "In schools across Italy" non è il soggetto! – Chi si sente ansioso?',pronoun:'they'},
-  {words:['For','young','fans','all','over','the','country,','Alfa','is','a','true','inspiration','and','a','real','role','model'],subject:[7],hint:'⚠️ Frase lunga! Il soggetto è una sola parola! – Chi è un\'ispirazione?',pronoun:'he'},
-  {words:['On','Mondays,','Wednesdays','and','Thursdays,','my','sister','practises','classical','ballet','for','two','and','a','half','hours'],subject:[5,6],hint:'⚠️ I giorni della settimana non sono il soggetto! – Chi si allena?',pronoun:'she'},
-  {words:['In','the','hospital','ward','every','morning,','a','gentle','therapy','dog','called','Max','visits','and','comforts','sick','children','and','elderly','patients'],subject:[6,7,8,9,10,11],hint:'⚠️ Il soggetto ha un nome proprio! – Chi visita i pazienti?',pronoun:'it'},
-  {words:['During','long','summer','tours','across','the','US,','Billie','Eilish','and','her','brother','Finneas','write','and','record','new','songs','together','on','the','tour','bus'],subject:[7,8,9,10,11,12],hint:'⚠️ Il soggetto è composto da due persone! – Chi scrive le canzoni?',pronoun:'they'},
-  {words:['At','major','Italian','music','festivals','every','summer,','Alfa','and','other','young','independent','artists','perform','live','for','thousands','of','enthusiastic','fans','from','all','over','Italy'],subject:[7,8,9,10,11,12],hint:'⚠️ Lunghissima frase! – Chi si esibisce?',pronoun:'they'},
-  {words:['In','quiet','hospital','rooms','and','busy','school','corridors,','specially','trained','therapy','dogs','and','their','dedicated','owners','work','together','to','help','people','who','feel','lonely,','anxious','or','unwell'],subject:[8,9,10,11,12,13,14,15],hint:'⚠️ Frase molto complessa! – Chi lavora?',pronoun:'they'},
-  {words:['For','many','years,','record','labels','and','music','producers','have','ignored','young','independent','artists','like','Alfa'],subject:[3,4,5,6,7],hint:'⚠️ "For many years" non è il soggetto! – Chi ha ignorato?',pronoun:'they'},
+  // Affermative
+  {words:['Throughout','the','semester,','dedicated','orchestra','students','practise','difficult','classical','pieces','every','single','day'],subject:[3,4,5],hint:'⚠️ Lungo! Chi si allena?',pronoun:'they'},
+  {words:['In','the','busy','kitchen','after','school,','the','cooking','club','members','prepare','delicious','recipes','together'],subject:[6,7,8,9],hint:'⚠️ Frase lunga! Chi prepara?',pronoun:'they'},
+  {words:['Sometimes','on','rainy','days,','the','teacher','at','primary','school'],subject:[4,5],hint:'⚠️ Grammatica semplice ma frase lunga!',pronoun:'she'},
+  {words:['During','competition','season,','particularly','talented','swimmers','from','our','club','win','many','medals','and','trophies'],subject:[4,5],hint:'⚠️ Chi vince?',pronoun:'they'},
+  {words:['Before','major','tournaments,','our','experienced','volleyball','coach','always','gives','important','advice','to','the','players'],subject:[3,4,5,6],hint:'⚠️ Chi dà consigli?',pronoun:'he'},
+  // Interrogative
+  {words:['Throughout','the','semester,','do','dedicated','orchestra','students','practise','difficult','classical','pieces','every','day?'],subject:[4,5,6],hint:'⚠️ Interrogativa! Chi pratica?',pronoun:'they'},
+  {words:['In','the','busy','kitchen','after','school,','do','the','cooking','club','members','prepare','delicious','recipes?'],subject:[7,8,9,10],hint:'⚠️ Interrogativa! Chi prepara?',pronoun:'they'},
+  {words:['Sometimes','on','rainy','days,','does','the','teacher','at','primary','school','arrive','late?'],subject:[5,6],hint:'⚠️ Interrogativa! Chi arriva?',pronoun:'she'},
+  {words:['During','competition','season,','do','particularly','talented','swimmers','from','our','club','win','many','medals?'],subject:[4,5,6],hint:'⚠️ Interrogativa! Chi vince?',pronoun:'they'},
+  {words:['Before','major','tournaments,','does','our','experienced','volleyball','coach','give','important','advice','to','the','players?'],subject:[4,5,6],hint:'⚠️ Interrogativa! Chi dà consigli?',pronoun:'he'},
+  // Negative
+  {words:['Throughout','the','semester,','dedicated','orchestra','students','don\'t','practise','difficult','classical','pieces','every','single','day'],subject:[3,4,5],hint:'⚠️ Negativa! Chi NON pratica?',pronoun:'they'},
+  {words:['In','the','busy','kitchen','after','school,','the','cooking','club','members','don\'t','prepare','delicious','recipes'],subject:[6,7,8,9],hint:'⚠️ Negativa! Chi NON prepara?',pronoun:'they'},
+  {words:['Sometimes','on','rainy','days,','the','teacher','at','primary','school','doesn\'t','arrive','on','time'],subject:[4,5],hint:'⚠️ Negativa! Chi NON arriva?',pronoun:'she'},
+  {words:['During','competition','season,','particularly','talented','swimmers','from','our','club','don\'t','win','many','medals'],subject:[4,5],hint:'⚠️ Negativa! Chi NON vince?',pronoun:'they'},
+  {words:['Before','major','tournaments,','our','experienced','volleyball','coach','doesn\'t','give','important','advice','to','the','players'],subject:[3,4,5,6],hint:'⚠️ Negativa! Chi NON dà consigli?',pronoun:'he'},
+  // Additional hard sentences
+  {words:['On','summer','holidays,','with','the','help','of','professional','instructors,','young','passionate','basketball','enthusiasts','learn','advanced','techniques'],subject:[9,10,11,12],hint:'⚠️ Molto lunga! Chi impara?',pronoun:'they'},
+  {words:['On','summer','holidays,','with','the','help','of','professional','instructors,','do','young','passionate','basketball','enthusiasts','learn','advanced','techniques?'],subject:[10,11,12,13],hint:'⚠️ Interrogativa lunga! Chi impara?',pronoun:'they'},
+  {words:['On','summer','holidays,','with','the','help','of','professional','instructors,','young','passionate','basketball','enthusiasts','don\'t','learn','advanced','techniques'],subject:[9,10,11,12],hint:'⚠️ Negativa lunghissima! Chi NON impara?',pronoun:'they'},
 ];
 
 GAMES['subject']=function(){
