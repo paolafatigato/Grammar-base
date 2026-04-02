@@ -102,6 +102,7 @@ td.blank.wrong{border-color:var(--fail)!important;background:rgba(255,77,109,.15
 .word-pill:hover{border-color:var(--pale-sky);background:rgba(191,224,243,.15);transform:translateY(-2px);}
 .word-pill.ok{background:rgba(76,222,128,.25);border-color:var(--ok);color:#a5f0c0;cursor:default;}
 .word-pill.fail{background:rgba(255,77,109,.22);border-color:var(--fail);}
+.word-pill.sel{background:rgba(140,158,255,.25);border-color:var(--wisteria-blue);color:var(--wisteria-blue);}
 @keyframes wShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 .word-pill.shake{animation:wShake .3s;}
 .sf-hint{text-align:center;font-size:.92rem;color:var(--peach-fuzz);margin:8px 0;min-height:22px;line-height:1.4;}
@@ -403,48 +404,53 @@ GAMES['speed']=function(){
    GAME 2 – SUBJECT HUNTER  (3 difficulty levels)
 ════════════════════════════════════════════════════════ */
 const SF_EASY=[
-  {groups:[['Alfa'],['sings'],['beautiful songs','to his fans']],si:0,hint:'Chi canta? / Who sings?'},
-  {groups:[['Sofia'],['loves'],['music and dancing','every day']],si:0,hint:'Chi ama la musica? / Who loves music?'},
-  {groups:[['The dog'],['sleeps'],['on the sofa','all afternoon']],si:0,hint:'Chi dorme? / Who sleeps?'},
-  {groups:[['Ballet dancers'],['practise'],['for many hours','every single day']],si:0,hint:'Chi si allena? / Who practises?'},
-  {groups:[['Therapy dogs'],['help'],['patients','feel better','in hospital']],si:0,hint:'Chi aiuta? / Who helps?'},
-  {groups:[['My sister'],['goes'],['to ballet class'],['on Mondays and Thursdays']],si:0,hint:'Chi va a lezione? / Who goes to class?'},
-  {groups:[['Billie Eilish'],['wears'],['big comfortable clothes'],['in all her music videos']],si:0,hint:'Chi indossa? / Who wears?'},
-  {groups:[['Volleyball players'],['hit'],['the ball'],['over the net to score a point']],si:0,hint:'Chi colpisce la palla? / Who hits the ball?'},
-  {groups:[['A jockey'],['rides'],['a horse'],['in every professional race']],si:0,hint:'Chi cavalca? / Who rides?'},
+  {groups:[['Alfa'],['sings'],['beautiful songs','to his fans']],si:0,hint:'Chi canta? / Who sings?',pronoun:'he'},
+  {groups:[['Sofia'],['loves'],['music and dancing','every day']],si:0,hint:'Chi ama la musica? / Who loves music?',pronoun:'she'},
+  {groups:[['The dog'],['sleeps'],['on the sofa','all afternoon']],si:0,hint:'Chi dorme? / Who sleeps?',pronoun:'it'},
+  {groups:[['Ballet dancers'],['practise'],['for many hours','every single day']],si:0,hint:'Chi si allena? / Who practises?',pronoun:'they'},
+  {groups:[['Therapy dogs'],['help'],['patients','feel better','in hospital']],si:0,hint:'Chi aiuta? / Who helps?',pronoun:'they'},
+  {groups:[['My sister'],['goes'],['to ballet class'],['on Mondays and Thursdays']],si:0,hint:'Chi va a lezione? / Who goes to class?',pronoun:'she'},
+  {groups:[['Billie Eilish'],['wears'],['big comfortable clothes'],['in all her music videos']],si:0,hint:'Chi indossa? / Who wears?',pronoun:'she'},
+  {groups:[['Volleyball players'],['hit'],['the ball'],['over the net to score a point']],si:0,hint:'Chi colpisce la palla? / Who hits the ball?',pronoun:'they'},
+  {groups:[['A jockey'],['rides'],['a horse'],['in every professional race']],si:0,hint:'Chi cavalca? / Who rides?',pronoun:'he'},
 ];
 const SF_MED=[
-  {groups:[['Every morning,'],['my sister'],['goes'],['to her ballet class','at the dance studio']],si:1,hint:'⚠️ Non è la prima parola! – Chi va a lezione?'},
-  {groups:[['In 2023,'],['Alfa'],['won'],['an important award','for best new Italian artist']],si:1,hint:'⚠️ Attenzione all\'inizio! – Chi ha vinto il premio?'},
-  {groups:[['At school,'],['therapy dogs'],['help'],['anxious students','concentrate better','during exams']],si:1,hint:'⚠️ Il soggetto non è all\'inizio! – Chi aiuta gli studenti?'},
-  {groups:[['After the match,'],['the volleyball players'],['celebrate'],['their hard-earned victory','together']],si:1,hint:'⚠️ Cerca dopo la virgola! – Chi festeggia?'},
-  {groups:[['In hospitals and care homes,'],['these specially trained dogs'],['visit'],['patients','every single day']],si:1,hint:'⚠️ Non iniziare dalla prima parola! – Chi visita i pazienti?'},
-  {groups:[['In Genova,'],['a young rapper called Alfa'],['writes songs'],['about everyday life,','love and growing up']],si:1,hint:'⚠️ Il soggetto è dopo la virgola! – Chi scrive le canzoni?'},
-  {groups:[['Last year,'],['millions of Italian teenagers'],['listened to'],['his songs','on streaming platforms']],si:1,hint:'⚠️ "Last year" non è il soggetto! – Chi ha ascoltato?'},
-  {groups:[['On social media,'],['Alfa\'s young fans'],['share and comment on'],['his new songs and videos','every week']],si:1,hint:'⚠️ Non è "On social media"! – Chi condivide?'},
-  {groups:[['During every home match,'],['the whole school'],['watches'],['the volleyball team','play with great passion']],si:1,hint:'⚠️ Dopo la virgola! – Chi guarda la partita?'},
+  // si=0 – soggetto in PRIMA posizione
+  {groups:[['Alfa'],['writes'],['songs about everyday life,','love and growing up']],si:0,hint:'Questa volta il soggetto è all\'inizio! – Chi scrive?',pronoun:'he'},
+  {groups:[['Therapy dogs'],['visit'],['hospitals and schools'],['every week to help people']],si:0,hint:'Il soggetto è il primo gruppo! – Chi visita?',pronoun:'they'},
+  // si=1 – soggetto dopo UNA frase introduttiva
+  {groups:[['In 2023,'],['Alfa'],['won'],['an important award','for best new Italian artist']],si:1,hint:'⚠️ Attenzione all\'inizio! – Chi ha vinto il premio?',pronoun:'he'},
+  {groups:[['At school,'],['therapy dogs'],['help'],['anxious students','concentrate better','during exams']],si:1,hint:'⚠️ Il soggetto non è all\'inizio! – Chi aiuta?',pronoun:'they'},
+  {groups:[['After the match,'],['the volleyball players'],['celebrate'],['their hard-earned victory','together']],si:1,hint:'⚠️ Cerca dopo la virgola! – Chi festeggia?',pronoun:'they'},
+  {groups:[['Every morning,'],['my sister'],['goes'],['to her ballet class','at the dance studio']],si:1,hint:'⚠️ Non è "Every morning"! – Chi va a lezione?',pronoun:'she'},
+  {groups:[['On social media,'],['Alfa\'s young fans'],['share and comment on'],['his new songs and videos','every week']],si:1,hint:'⚠️ Non è "On social media"! – Chi condivide?',pronoun:'they'},
+  // si=2 – soggetto dopo DUE gruppi introduttivi
+  {groups:[['In Italy,'],['every summer,'],['Alfa and other young artists'],['perform at big music festivals']],si:2,hint:'⚠️ Ci sono DUE introduzioni – il soggetto è il terzo gruppo! – Chi si esibisce?',pronoun:'they'},
+  {groups:[['In hospitals,'],['every morning,'],['a gentle therapy dog called Max'],['visits and comforts sick patients']],si:2,hint:'⚠️ Due gruppi introduttivi prima del soggetto! – Chi visita i pazienti?',pronoun:'it'},
 ];
 const SF_HARD=[
-  {groups:[['Every day after school,'],['my best friend and I'],['play volleyball together'],['for at least two hours','before dinner']],si:1,hint:'⚠️ Il soggetto sono due persone! – Chi gioca?'},
-  {groups:[['In schools across Italy,'],['many young students'],['feel extremely anxious'],['before important exams','and school presentations']],si:1,hint:'⚠️ Lunga frase! "In schools across Italy" non è il soggetto – Chi si sente ansioso?'},
-  {groups:[['For young fans','all over the country,'],['Alfa'],['is'],['a true inspiration','and a real role model']],si:1,hint:'⚠️ Frase lunga! Il soggetto è dopo la virgola! – Chi è un\'ispirazione?'},
-  {groups:[['On Mondays, Wednesdays','and Thursdays,'],['my sister'],['practises'],['classical ballet','for two and a half hours']],si:1,hint:'⚠️ I giorni della settimana non sono il soggetto! – Chi si allena?'},
-  {groups:[['In the hospital ward','every morning,'],['a gentle therapy dog called Max'],['visits and comforts'],['sick children','and elderly patients']],si:1,hint:'⚠️ Il soggetto ha un nome proprio! – Chi visita i pazienti?'},
-  {groups:[['During long summer tours','across the US,'],['Billie Eilish and her brother Finneas'],['write and record'],['new songs together','on the tour bus']],si:1,hint:'⚠️ Il soggetto è composto da due persone! – Chi scrive le canzoni?'},
-  {groups:[['At major Italian music festivals','every summer,'],['Alfa and other young independent artists'],['perform live'],['for thousands of enthusiastic fans','from all over Italy']],si:1,hint:'⚠️ Lunghissima frase! – Chi si esibisce?'},
-  {groups:[['In quiet hospital rooms','and busy school corridors,'],['specially trained therapy dogs','and their dedicated owners'],['work together'],['to help people who feel lonely,','anxious or unwell']],si:1,hint:'⚠️ Frase molto complessa! Il soggetto è dopo la virgola! – Chi lavora?'},
-  {groups:[['For many years,'],['record labels and music producers'],['have ignored'],['young independent artists','like Alfa']],si:1,hint:'⚠️ "For many years" non è il soggetto! – Chi ha ignorato?'},
+  {words:['Every','day','after','school,','my','best','friend','and','I','play','volleyball','together','for','at','least','two','hours','before','dinner'],subject:[4,5,6,7,8],hint:'⚠️ Il soggetto sono due persone! – Chi gioca?',pronoun:'we'},
+  {words:['In','schools','across','Italy,','many','young','students','feel','extremely','anxious','before','important','exams','and','school','presentations'],subject:[4,5,6],hint:'⚠️ "In schools across Italy" non è il soggetto! – Chi si sente ansioso?',pronoun:'they'},
+  {words:['For','young','fans','all','over','the','country,','Alfa','is','a','true','inspiration','and','a','real','role','model'],subject:[7],hint:'⚠️ Frase lunga! Il soggetto è una sola parola! – Chi è un\'ispirazione?',pronoun:'he'},
+  {words:['On','Mondays,','Wednesdays','and','Thursdays,','my','sister','practises','classical','ballet','for','two','and','a','half','hours'],subject:[5,6],hint:'⚠️ I giorni della settimana non sono il soggetto! – Chi si allena?',pronoun:'she'},
+  {words:['In','the','hospital','ward','every','morning,','a','gentle','therapy','dog','called','Max','visits','and','comforts','sick','children','and','elderly','patients'],subject:[6,7,8,9,10,11],hint:'⚠️ Il soggetto ha un nome proprio! – Chi visita i pazienti?',pronoun:'it'},
+  {words:['During','long','summer','tours','across','the','US,','Billie','Eilish','and','her','brother','Finneas','write','and','record','new','songs','together','on','the','tour','bus'],subject:[7,8,9,10,11,12],hint:'⚠️ Il soggetto è composto da due persone! – Chi scrive le canzoni?',pronoun:'they'},
+  {words:['At','major','Italian','music','festivals','every','summer,','Alfa','and','other','young','independent','artists','perform','live','for','thousands','of','enthusiastic','fans','from','all','over','Italy'],subject:[7,8,9,10,11,12],hint:'⚠️ Lunghissima frase! – Chi si esibisce?',pronoun:'they'},
+  {words:['In','quiet','hospital','rooms','and','busy','school','corridors,','specially','trained','therapy','dogs','and','their','dedicated','owners','work','together','to','help','people','who','feel','lonely,','anxious','or','unwell'],subject:[8,9,10,11,12,13,14,15],hint:'⚠️ Frase molto complessa! – Chi lavora?',pronoun:'they'},
+  {words:['For','many','years,','record','labels','and','music','producers','have','ignored','young','independent','artists','like','Alfa'],subject:[3,4,5,6,7],hint:'⚠️ "For many years" non è il soggetto! – Chi ha ignorato?',pronoun:'they'},
 ];
 
 GAMES['subject']=function(){
   setTitle('🔍 Subject Hunter');
   const area=getArea();
-  let qi=0,score=0,answered=false,sfData=null;
+  // score counts both subject+pronoun steps, max = sfData.length*2
+  let qi=0,score=0,answered=false,sfData=null,currentDif='easy',errThisQ=false;
 
   function showDifficultyScreen(){
     area.innerHTML=`<div class="game-card" style="text-align:center;">
       <p style="font-family:'Fredoka One',cursive;font-size:1.5rem;margin-bottom:8px;">🔍 Subject Hunter</p>
       <p class="g-instr" style="margin-bottom:24px;">Clicca sul <span>gruppo di parole che fa da soggetto</span> della frase.<br>
+      Poi scegli il <span>pronome corretto</span>! (⭐ 1 punto a step)<br>
       Scegli il livello di difficoltà! / Choose your difficulty level!</p>
       <div class="dif-selector">
         <button class="dif-btn dif-easy" onclick="startSubjectGame('easy')">
@@ -460,26 +466,62 @@ GAMES['subject']=function(){
         <button class="dif-btn dif-hard" onclick="startSubjectGame('hard')">
           <div style="font-size:1.6rem">⭐⭐⭐</div>
           <div>Difficile</div>
-          <div style="font-size:.8rem;opacity:.7">Frasi complesse, soggetto nascosto!</div>
+          <div style="font-size:.8rem;opacity:.7">Parola per parola – seleziona solo il soggetto!</div>
         </button>
       </div></div>`;
   }
 
   window.startSubjectGame=function(dif){
     const map={easy:SF_EASY,med:SF_MED,hard:SF_HARD};
-    sfData=shuffle(map[dif]);qi=0;score=0;answered=false;
-    setScore(0,sfData.length);renderQ();
+    sfData=shuffle(map[dif]);qi=0;score=0;answered=false;currentDif=dif;
+    setScore(0,sfData.length*2);renderQ();
   };
 
+  // ── shared pronoun step ──────────────────────────────────
+  function showPronounStep(q,subjectText,subjectEarned){
+    const correct=q.pronoun;
+    const wrong3=shuffle(ALL_PRONOUNS.filter(p=>p!==correct)).slice(0,3);
+    const choices=shuffle([correct,...wrong3]);
+    area.innerHTML=`<div class="game-card">
+      <p class="g-instr">Bene! Ora scegli il <span>pronome soggetto</span> corretto per:<br>
+      <em style="color:var(--pale-sky);font-size:1.1rem;">“${subjectText}”</em></p>
+      <div style="text-align:right;font-size:.82rem;color:var(--dim);margin-bottom:6px;">${qi+1} / ${sfData.length} – step 2</div>
+      <div class="choices" id="pr-choices"></div>
+      <div id="pr-hint" style="text-align:center;min-height:24px;margin-top:8px;font-size:.92rem;font-weight:700;"></div></div>`;
+    const ch=document.getElementById('pr-choices');
+    choices.forEach(p=>{
+      const b=document.createElement('button');
+      b.className='choice';b.style.background=PC[p];b.style.color=PCT[p];b.textContent=p;
+      b.addEventListener('click',()=>{
+        if(b.dataset.done)return;b.dataset.done='1';
+        ch.querySelectorAll('.choice').forEach(x=>x.dataset.done='1');
+        if(p===correct){
+          b.classList.add('c-ok');score++;setScore(score,sfData.length*2);playOk();flash('ok');
+          burst(b.getBoundingClientRect().left+40,b.getBoundingClientRect().top+20,PC[p]);
+          document.getElementById('pr-hint').innerHTML='<span style="color:var(--ok)">✅ Corretto! '+correct+' – perfetto!</span>';
+          setTimeout(()=>{qi++;renderQ();},750);
+        } else {
+          b.classList.add('c-fail');
+          ch.querySelectorAll('.choice').forEach(x=>{if(x.textContent===correct)x.classList.add('c-ok');});
+          playFail();flash('fail');
+          document.getElementById('pr-hint').innerHTML=`<span style="color:var(--fail)">❌ Sbagliato! Il pronome corretto era: <strong>${correct}</strong></span>`;
+          setTimeout(()=>{qi++;renderQ();},1200);
+        }
+      });
+      ch.appendChild(b);
+    });
+  }
+
+  // ── easy / med ──────────────────────────────────────────
   function renderQ(){
-    if(qi>=sfData.length){showResult(score,sfData.length,'subject');return;}
-    answered=false;
+    if(qi>=sfData.length){showResult(score,sfData.length*2,'subject');return;}
+    if(currentDif==='hard'){renderHardQ(sfData[qi]);return;}
+    answered=false;errThisQ=false;
     const q=sfData[qi];
-    const difColors={'easy':'var(--ok)','med':'var(--peach-fuzz)','hard':'var(--fail)'};
     area.innerHTML=`<div class="game-card">
       <p class="g-instr">Clicca sul <span>gruppo di parole soggetto</span>! Chi o cosa compie l\'azione?<br>
       <em>Hint: ${q.hint}</em></p>
-      <div style="text-align:right;font-size:.82rem;color:var(--dim);margin-bottom:6px;">${qi+1} / ${sfData.length}</div>
+      <div style="text-align:right;font-size:.82rem;color:var(--dim);margin-bottom:6px;">${qi+1} / ${sfData.length} – step 1</div>
       <div class="progress-strip" id="sf-prog"></div>
       <div class="sf-sent" id="sf-sent"></div>
       <div class="sf-hint" id="sf-hint">&nbsp;</div></div>`;
@@ -497,15 +539,72 @@ GAMES['subject']=function(){
   function handleClick(gi,pill,q){
     if(answered)return;answered=true;
     if(gi===q.si){
-      pill.classList.add('ok');score++;setScore(score,sfData.length);playOk();flash('ok');
+      pill.classList.add('ok');
+      if(!errThisQ){score++;}
+      setScore(score,sfData.length*2);playOk();flash('ok');
       burst(pill.getBoundingClientRect().left+pill.offsetWidth/2,pill.getBoundingClientRect().top+20,PC.she);
-      document.getElementById('sf-hint').innerHTML='<span style="color:var(--ok)">✅ Corretto! Hai trovato il soggetto! / Correct! You found the subject!</span>';
-      setTimeout(()=>{qi++;renderQ();},900);
+      const subjectText=q.groups[q.si].join(' ');
+      const msg=errThisQ
+        ?'<span style="color:var(--peach-fuzz)">✅ Trovato! Ma hai sbagliato prima – nessun punto. Ora scegli il pronome!</span>'
+        :'<span style="color:var(--ok)">✅ Corretto! Ora scegli il pronome!</span>';
+      document.getElementById('sf-hint').innerHTML=msg;
+      setTimeout(()=>showPronounStep(q,subjectText,!errThisQ),700);
     } else {
+      errThisQ=true;
       pill.classList.add('fail','shake');playFail();flash('fail');
-      document.getElementById('sf-hint').innerHTML='<span style="color:var(--fail)">❌ Riprova! Leggi il suggerimento sopra! / Try again! Read the hint!</span>';
+      document.getElementById('sf-hint').innerHTML='<span style="color:var(--fail)">❌ Sbagliato! Nessun punto se sbagli. Riprova!</span>';
       setTimeout(()=>{pill.classList.remove('fail','shake');answered=false;},700);
     }
+  }
+
+  // ── hard ────────────────────────────────────────────────
+  function renderHardQ(q){
+    answered=false;errThisQ=false;
+    const subjectSet=new Set(q.subject);
+    const selectedSet=new Set();
+    area.innerHTML=`<div class="game-card">
+      <p class="g-instr">Clicca su <span>tutte e sole le parole del soggetto</span>, poi premi ➡️ Avanti!<br>
+      <em>${q.hint}</em></p>
+      <div style="text-align:right;font-size:.82rem;color:var(--dim);margin-bottom:6px;">${qi+1} / ${sfData.length} – step 1</div>
+      <div class="progress-strip" id="sf-prog"></div>
+      <div class="sf-sent" id="sf-sent"></div>
+      <div class="sf-hint" id="sf-hint">&nbsp;</div>
+      <div style="text-align:center;margin-top:16px;">
+        <button class="btn-ok btn-primary-game" id="sf-confirm">➡️ Avanti</button>
+      </div></div>`;
+    const prog=document.getElementById('sf-prog');
+    for(let i=0;i<sfData.length;i++){const d=document.createElement('div');d.className='prog-dot'+(i<qi?' done':i===qi?' curr':'');prog.appendChild(d);}
+    const sent=document.getElementById('sf-sent');
+    q.words.forEach((word,idx)=>{
+      const pill=document.createElement('div');pill.className='word-pill';
+      pill.textContent=word;
+      pill.addEventListener('click',()=>{
+        if(answered)return;
+        if(selectedSet.has(idx)){selectedSet.delete(idx);pill.classList.remove('sel');}
+        else{selectedSet.add(idx);pill.classList.add('sel');}
+      });
+      sent.appendChild(pill);
+    });
+    document.getElementById('sf-confirm').addEventListener('click',()=>{
+      if(answered)return;
+      if(selectedSet.size===0){document.getElementById('sf-hint').innerHTML='<span style="color:var(--peach-fuzz)">⚠️ Seleziona almeno una parola prima di confermare!</span>';return;}
+      answered=true;
+      const correct=selectedSet.size===subjectSet.size&&[...selectedSet].every(i=>subjectSet.has(i));
+      const pills=sent.querySelectorAll('.word-pill');
+      const subjectText=q.subject.map(i=>q.words[i]).join(' ');
+      if(correct){
+        pills.forEach((pill,idx)=>{pill.classList.remove('sel');if(subjectSet.has(idx))pill.classList.add('ok');});
+        score++;setScore(score,sfData.length*2);playOk();flash('ok');
+        burst(sent.getBoundingClientRect().left+sent.offsetWidth/2,sent.getBoundingClientRect().top+20,PC.she);
+        document.getElementById('sf-hint').innerHTML='<span style="color:var(--ok)">✅ Perfetto! Ora scegli il pronome!</span>';
+        setTimeout(()=>showPronounStep(q,subjectText,true),700);
+      } else {
+        pills.forEach((pill,idx)=>{pill.classList.remove('sel');if(subjectSet.has(idx))pill.classList.add('ok');else if(selectedSet.has(idx))pill.classList.add('fail');});
+        playFail();flash('fail');
+        document.getElementById('sf-hint').innerHTML='<span style="color:var(--fail)">❌ Non esatto! Verde = soggetto corretto. Ora prova il pronome!</span>';
+        setTimeout(()=>showPronounStep(q,subjectText,false),2000);
+      }
+    });
   }
 
   showDifficultyScreen();cleanupFn=null;
