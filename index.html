@@ -307,7 +307,7 @@ const ALL_PRONOUNS=['I','you','he','she','it','we','they'];
 /* ════════════════════════════════════════════════════════
    GAME 1A – SPEED PRONOUNS
 ════════════════════════════════════════════════════════ */
-const SUBJECTS=[
+const SUBJECTS=shuffle([
   {word:'Marco',emoji:'👦',pronoun:'he'},{word:'Sofia',emoji:'👧',pronoun:'she'},
   {word:'Billie Eilish',emoji:'🎤',pronoun:'she'},{word:'Alfa',emoji:'🎸',pronoun:'he'},
   {word:'the cat',emoji:'🐱',pronoun:'it'},{word:'my dog',emoji:'🐶',pronoun:'it'},
@@ -315,18 +315,29 @@ const SUBJECTS=[
   {word:'the therapy dog',emoji:'🐕',pronoun:'it'},{word:'my sister',emoji:'👩',pronoun:'she'},
   {word:'my friends',emoji:'👥',pronoun:'they'},{word:'the ball',emoji:'⚽',pronoun:'it'},
   {word:'Ms Fatigato',emoji:'👩‍🏫',pronoun:'she'},{word:'a jockey',emoji:'🏇',pronoun:'he'},
-];
+  {word:'my brother',emoji:'🧒',pronoun:'he'},{word:'Taylor Swift',emoji:'🎵',pronoun:'she'},
+  {word:'Cristiano Ronaldo',emoji:'⚽',pronoun:'he'},{word:'my parents',emoji:'👨‍👩‍👦',pronoun:'they'},
+  {word:'the students',emoji:'🧑‍🎓',pronoun:'they'},{word:'my phone',emoji:'📱',pronoun:'it'},
+  {word:'you and I',emoji:'🙋',pronoun:'we'},{word:'a rabbit',emoji:'🐰',pronoun:'it'},
+  {word:'Harry Styles',emoji:'🎤',pronoun:'he'},{word:'Beyoncé',emoji:'🎶',pronoun:'she'},
+  {word:'the school',emoji:'🏫',pronoun:'it'},{word:'my mum and dad',emoji:'👨‍👩‍👦',pronoun:'they'},
+  {word:'the pizza',emoji:'🍕',pronoun:'it'},{word:'the birds',emoji:'🐦',pronoun:'they'},
+  {word:'a puppy',emoji:'🐶',pronoun:'it'},{word:'my teacher',emoji:'👩‍🏫',pronoun:'she'},
+  {word:'Luca',emoji:'👦',pronoun:'he'},{word:'my best friend',emoji:'👫',pronoun:'she'},
+  {word:'the laptop',emoji:'💻',pronoun:'it'},{word:'the children',emoji:'👧👦',pronoun:'they'},
+  {word:'Emma and I',emoji:'🤝',pronoun:'we'},{word:'a horse',emoji:'🐴',pronoun:'it'},
+]);
 
 const GAMES={};
 GAMES['speed']=function(){
   setTitle('⚡ Speed Clicker');
   const area=getArea();
-  let subIdx=0,score=0,lives=3,speed=130,RAF=null,active=false,bubbles=[],timer=60,timerInt=null;
+  let subIdx=0,score=0,attempts=0,speed=130,RAF=null,active=false,bubbles=[],timer=60,timerInt=null;
   const subjects=shuffle(SUBJECTS);let curr=subjects[subIdx];
 
   area.innerHTML=`<div class="game-card">
     <p class="g-instr">Il soggetto è mostrato sopra. <span>Clicca il pronome corretto</span> prima che scompaia!<br>
-    <em>Click the correct pronoun before it flies off the screen!</em></p>
+    <em>Vince chi fa più risposte esatte in 60 secondi! 🏆</em></p>
     <div id="speed-display" class="big-label">${curr.emoji} ${curr.word} → ?</div>
     <div class="arena" id="speed-arena"></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding:0 4px;">
@@ -335,7 +346,8 @@ GAMES['speed']=function(){
     </div></div>`;
 
   const arena=document.getElementById('speed-arena');
-  setLives(3);setScore(0,0);
+  document.getElementById('lives-bar').textContent='';
+  setScore(0,0);
 
   function spawnBubbles(){
     bubbles.forEach(b=>b.el&&b.el.remove());bubbles=[];
@@ -353,8 +365,9 @@ GAMES['speed']=function(){
 
   function handleClick(p,el){
     if(!active)return;
+    attempts++;
     if(p===curr.pronoun){
-      score++;setScore(score,0);playOk();flash('ok');
+      score++;setScore(score,attempts);playOk();flash('ok');
       burst(el.getBoundingClientRect().left+30,el.getBoundingClientRect().top+20,PC[p]);
       el.style.transform='scale(2)';el.style.opacity='0';setTimeout(()=>el.remove(),300);
       speed=Math.min(speed+16,440);
@@ -363,10 +376,10 @@ GAMES['speed']=function(){
       document.getElementById('speed-display').textContent=`${curr.emoji} ${curr.word} → ?`;
       spawnBubbles();
     } else {
-      playFail();flash('fail');lives--;setLives(lives);
+      playFail();flash('fail');
+      setScore(score,attempts);
       el.style.background='#ff4d6d';el.style.color='#fff';
       setTimeout(()=>{if(el.parentNode){el.style.background=PC[p];el.style.color=PCT[p];}},350);
-      if(lives<=0)endGame();
     }
   }
 
@@ -379,7 +392,7 @@ GAMES['speed']=function(){
     RAF=requestAnimationFrame(loop);
   }
 
-  function endGame(){active=false;if(RAF)cancelAnimationFrame(RAF);clearInterval(timerInt);bubbles.forEach(b=>b.el&&b.el.remove());showResult(score,score+lives<score?score:score+lives,'speed');}
+  function endGame(){active=false;if(RAF)cancelAnimationFrame(RAF);clearInterval(timerInt);bubbles.forEach(b=>b.el&&b.el.remove());showResult(score,Math.max(attempts,score),'speed');}
 
   active=true;spawnBubbles();lastT=performance.now();RAF=requestAnimationFrame(loop);
   timerInt=setInterval(()=>{timer--;const el=document.getElementById('s-timer');if(el)el.textContent=timer;if(timer<=0)endGame();},1000);
