@@ -324,7 +324,7 @@ const SUBJECTS=shuffle([
   {word:'the school',emoji:'🏫',pronoun:'it'},{word:'my mum and dad',emoji:'👨‍👩‍👦',pronoun:'they'},
   {word:'the pizza',emoji:'🍕',pronoun:'it'},{word:'the birds',emoji:'🐦',pronoun:'they'},
   {word:'a puppy',emoji:'🐶',pronoun:'it'},{word:'my teacher',emoji:'👩‍🏫',pronoun:'she'},
-  {word:'Luca',emoji:'👦',pronoun:'he'},{word:'my best friend',emoji:'👫',pronoun:'she'},
+  {word:'Luca',emoji:'👦',pronoun:'he'},{word:'my best friend',emoji:'👫',pronouns:['he','she']},
   {word:'the laptop',emoji:'💻',pronoun:'it'},{word:'the children',emoji:'👧👦',pronoun:'they'},
   {word:'Emma and I',emoji:'🤝',pronoun:'we'},{word:'a horse',emoji:'🐴',pronoun:'it'},
 ]);
@@ -367,7 +367,8 @@ GAMES['speed']=function(){
   function handleClick(p,el){
     if(!active)return;
     attempts++;
-    if(p===curr.pronoun){
+    const correctPronouns=Array.isArray(curr.pronouns)?curr.pronouns:[curr.pronoun];
+    if(correctPronouns.includes(p)){
       score++;setScore(score,attempts);playOk();flash('ok');
       burst(el.getBoundingClientRect().left+30,el.getBoundingClientRect().top+20,PC[p]);
       el.style.transform='scale(2)';el.style.opacity='0';setTimeout(()=>el.remove(),300);
@@ -447,7 +448,7 @@ const SF_MED=[
   {groups:[['Does'],['Sophie'],['learn','Spanish','and','Italian','at school?']],si:1,hint:'⚠️ Interrogativa! / Interrogative!',pronoun:'she'},
   {groups:[['Last summer,'],['did'],['my cousin'],['travel','across Europe','with his family?']],si:2,hint:'⚠️ Interrogativa con did! / Interrogative with did!',pronoun:'he'},
   {groups:[['Every weekend,'],['during the afternoon,'],['do'],['teenage','volunteers'],['clean','the local park?']],si:3,hint:'⚠️ Interrogativa dopo due introduzioni! / Interrogative!',pronoun:'they'},
-  {groups:[['Do'],['the swimming team'],['train','five days a week','in the pool?']],si:1,hint:'⚠️ Interrogativa con do! / Interrogative!',pronoun:'they'},
+  {groups:[['Does'],['the swimming team'],['train','five days a week','in the pool?']],si:1,hint:'⚠️ Interrogativa con does! / Interrogative!',pronoun:'it'},
   {groups:[['Before','exams,'],['do'],['stressed','students'],['meet','in the library','to study?']],si:2,hint:'⚠️ Interrogativa con do! / Interrogative!',pronoun:'they'},
   {groups:[['In the summer holidays,'],['every morning,'],['do'],['the kids','at camp'],['play','outdoor games?']],si:3,hint:'⚠️ Interrogativa dopo due intro! / Interrogative!',pronoun:'they'},
   {groups:[['Does'],['Liam'],['enjoy','rock music','and','concerts','every month?']],si:1,hint:'⚠️ Interrogativa! / Interrogative!',pronoun:'he'},
