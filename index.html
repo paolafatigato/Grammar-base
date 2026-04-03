@@ -333,21 +333,22 @@ const GAMES={};
 GAMES['speed']=function(){
   setTitle('⚡ Speed Clicker');
   const area=getArea();
-  let subIdx=0,score=0,attempts=0,speed=130,RAF=null,active=false,bubbles=[],timer=60,timerInt=null;
+  let subIdx=0,score=0,attempts=0,speed=130,RAF=null,active=false,bubbles=[],elapsed=0,timerInt=null,lives=5;
   const subjects=shuffle(SUBJECTS);let curr=subjects[subIdx];
+  function showLives(){document.getElementById('lives-bar').textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(Math.max(0,5-lives));}
 
   area.innerHTML=`<div class="game-card">
     <p class="g-instr">Il soggetto è mostrato sopra. <span>Clicca il pronome corretto</span> prima che scompaia!<br>
-    <em>Vince chi fa più risposte esatte in 60 secondi! 🏆</em></p>
+    <em>Hai 5 vite – quanto riesci ad andare avanti? 🏆</em></p>
     <div id="speed-display" class="big-label">${curr.emoji} ${curr.word} → ?</div>
     <div class="arena" id="speed-arena"></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding:0 4px;">
-      <div style="color:var(--dim);font-size:.9rem;">⏱ <span id="s-timer">60</span>s</div>
+      <div style="color:var(--dim);font-size:.9rem;">⏱ <span id="s-timer">0</span>s</div>
       <div style="color:var(--dim);font-size:.9rem;">🚀 velocità: <span id="s-speed">1.0</span>x</div>
     </div></div>`;
 
   const arena=document.getElementById('speed-arena');
-  document.getElementById('lives-bar').textContent='';
+  showLives();
   setScore(0,0);
 
   function spawnBubbles(){
@@ -372,16 +373,18 @@ GAMES['speed']=function(){
       score++;setScore(score,attempts);playOk();flash('ok');
       burst(el.getBoundingClientRect().left+30,el.getBoundingClientRect().top+20,PC[p]);
       el.style.transform='scale(2)';el.style.opacity='0';setTimeout(()=>el.remove(),300);
-      speed=Math.min(speed+16,440);
+      speed=Math.min(speed+8,440);
       document.getElementById('s-speed').textContent=(speed/130).toFixed(1);
       subIdx=(subIdx+1)%subjects.length;curr=subjects[subIdx];
       document.getElementById('speed-display').textContent=`${curr.emoji} ${curr.word} → ?`;
       spawnBubbles();
     } else {
+      lives--;showLives();
       playFail();flash('fail');
       setScore(score,attempts);
       el.style.background='#ff4d6d';el.style.color='#fff';
       setTimeout(()=>{if(el.parentNode){el.style.background=PC[p];el.style.color=PCT[p];}},350);
+      if(lives<=0)setTimeout(()=>endGame(),400);
     }
   }
 
@@ -397,7 +400,7 @@ GAMES['speed']=function(){
   function endGame(){active=false;if(RAF)cancelAnimationFrame(RAF);clearInterval(timerInt);bubbles.forEach(b=>b.el&&b.el.remove());showResult(score,Math.max(attempts,score),'speed');}
 
   active=true;spawnBubbles();lastT=performance.now();RAF=requestAnimationFrame(loop);
-  timerInt=setInterval(()=>{timer--;const el=document.getElementById('s-timer');if(el)el.textContent=timer;if(timer<=0)endGame();},1000);
+  timerInt=setInterval(()=>{elapsed++;const el=document.getElementById('s-timer');if(el)el.textContent=elapsed;if(elapsed>=300)endGame();},1000);
   cleanupFn=()=>{active=false;if(RAF)cancelAnimationFrame(RAF);clearInterval(timerInt);};
 };
 
