@@ -951,6 +951,31 @@ const SCATCH_DATA=[
   {sub:'I',verb:'finish',correct:'—',result:'finish',rule:'— · nessuna S (we/you/i/they)'},
   {sub:'You',verb:'sleep',correct:'—',result:'sleep',rule:'— · nessuna S (we/you/i/they)'},
   {sub:'They',verb:'mix',correct:'—',result:'mix',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'He',verb:'buzz',correct:'es',result:'buzzes',rule:'+es · finisce in -z'},
+  {sub:'She',verb:'pass',correct:'es',result:'passes',rule:'+es · finisce in -ss'},
+  {sub:'It',verb:'kiss',correct:'es',result:'kisses',rule:'+es · finisce in -ss'},
+  {sub:'He',verb:'cry',correct:'ies',result:'cries',rule:'+ies · consonante + -y → togli -y'},
+  {sub:'She',verb:'worry',correct:'ies',result:'worries',rule:'+ies · consonante + -y → togli -y'},
+  {sub:'It',verb:'box',correct:'es',result:'boxes',rule:'+es · finisce in -x'},
+  {sub:'We',verb:'work',correct:'—',result:'work',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'I',verb:'run',correct:'—',result:'run',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'You',verb:'try',correct:'—',result:'try',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'They',verb:'teach',correct:'—',result:'teach',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'He',verb:'wash',correct:'es',result:'washes',rule:'+es · finisce in -sh'},
+  {sub:'She',verb:'fix',correct:'es',result:'fixes',rule:'+es · finisce in -x'},
+  {sub:'It',verb:'catch',correct:'es',result:'catches',rule:'+es · finisce in -ch'},
+  {sub:'We',verb:'help',correct:'—',result:'help',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'I',verb:'dance',correct:'—',result:'dance',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'You',verb:'love',correct:'—',result:'love',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'They',verb:'jump',correct:'—',result:'jump',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'He',verb:'drink',correct:'s',result:'drinks',rule:'+s · la maggior parte dei verbi'},
+  {sub:'She',verb:'sleep',correct:'s',result:'sleeps',rule:'+s · la maggior parte dei verbi'},
+  {sub:'It',verb:'cost',correct:'s',result:'costs',rule:'+s · la maggior parte dei verbi'},
+  {sub:'We',verb:'study',correct:'—',result:'study',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'I',verb:'watch',correct:'—',result:'watch',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'You',verb:'eat',correct:'—',result:'eat',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'They',verb:'arrive',correct:'—',result:'arrive',rule:'— · nessuna S (we/you/i/they)'},
+  {sub:'He',verb:'change',correct:'s',result:'changes',rule:'+s · la maggior parte dei verbi'},
 ];
 const END_COLORS={s:PC.I,es:PC.he,ies:PC.she,'—':'#3a3a5a'};
 const END_TEXTC={s:PCT.I,es:PCT.he,ies:PCT.she,'—':'#9090b8'};
@@ -1012,7 +1037,7 @@ GAMES['s-catch']=function(){
       el.style.left=x+'px';el.style.top='-76px';
       el.addEventListener('click',()=>handleEndClick(end,el,q));
       arena.appendChild(el);
-      endEls.push({el,y:-76,speed:78+Math.random()*28+qi*5,ending:end,active:true});
+      endEls.push({el,y:-76,speed:78+Math.random()*28+qi*5+Math.max(0,(totalAttempts-20))*3,ending:end,active:true});
     });
     if(!active){active=true;loopStart();}
   }
@@ -1041,12 +1066,12 @@ GAMES['s-catch']=function(){
               // treat as miss - show answer
               lives--;setLives(lives);playFail();flash('fail');
               if(lives<=0){showResult(score,qs.length,'s-catch');return;}
-              showAnswerOverlay(document.getElementById('scatch-arena'),q,()=>{qi++;updateProg();active=true;loopStart();startRound();});
+              showAnswerOverlay(document.getElementById('scatch-arena'),q,()=>{qi++;totalAttempts++;updateProg();active=true;loopStart();startRound();});
             } else {
               // wrong one landed (should have been clicked)
               lives--;setLives(lives);playFail();flash('fail');
               if(lives<=0){showResult(score,qs.length,'s-catch');return;}
-              showAnswerOverlay(document.getElementById('scatch-arena'),q,()=>{qi++;updateProg();active=true;loopStart();startRound();});
+              showAnswerOverlay(document.getElementById('scatch-arena'),q,()=>{qi++;totalAttempts++;updateProg();active=true;loopStart();startRound();});
             }
           } else { b.el&&b.el.remove(); }
         }
@@ -1068,7 +1093,7 @@ GAMES['s-catch']=function(){
       burst(el.getBoundingClientRect().left+36,el.getBoundingClientRect().top+36,END_COLORS[end]);
       setTimeout(()=>{
         endEls.forEach(b=>b.el&&b.el.remove());
-        qi++;updateProg();active=true;loopStart();startRound();
+        qi++;totalAttempts++;updateProg();active=true;loopStart();startRound();
       },550);
     } else {
       // Wrong - explode it, lose life, show overlay
@@ -1081,7 +1106,7 @@ GAMES['s-catch']=function(){
       setTimeout(()=>{
         endEls.forEach(b=>b.el&&b.el.remove());
         const arena=document.getElementById('scatch-arena');
-        if(arena)showAnswerOverlay(arena,q,()=>{qi++;updateProg();active=true;loopStart();startRound();});
+        if(arena)showAnswerOverlay(arena,q,()=>{qi++;totalAttempts++;updateProg();active=true;loopStart();startRound();});
       },400);
     }
   }
